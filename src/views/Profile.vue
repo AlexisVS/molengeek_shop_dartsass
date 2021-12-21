@@ -1,5 +1,12 @@
 <template>
-  <div class="flex h-screen items-center justify-center mt-32 mb-32">
+  <div class="flex flex-col items-center justify-center mt-16 mb-16 px-16">
+    <div class="w-full flex items-center mb-16">
+      <div class="text-white text-2xl w-1/2 px-5%">
+        <div class="font-bold">First name: <span class="font-medium">{{profile.firstname}}</span></div>
+        <div class="font-bold">Last name: <span class="font-medium">{{profile.lastname}}</span></div>
+      </div>
+      <img :src="'https://api-moshop.molengeek.pro' + profile.picture_path" class="w-90%" alt="">
+    </div>
     <div class="grid bg-white rounded-lg shadow-xl w-11/12 md:w-9/12 lg:w-1/2">
       <div class="flex justify-center py-4">
         <div class="flex bg-purple-200 rounded-full md:p-4 p-2 border-2 border-purple-300">
@@ -125,7 +132,7 @@ export default {
             headers: {
               'Authorization': 'Bearer ' + this.$store.state.authToken,
             }
-          }).then(res => { console.log(res); })
+          })
       }
       if (this.picture != null) {
         let formData = new FormData();
@@ -135,11 +142,9 @@ export default {
           {
             headers: {
               'Authorization': 'Bearer ' + this.$store.state.authToken,
-              // 'Content-Type': 'multipart/form-data',
-              // 'Accept': 'application/json'
             }
           },
-        ).then(res => { console.log(res); }).catch(err => { console.log(err); });
+        )
       }
     }
   }

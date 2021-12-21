@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     authToken: null,
     profile: null,
+    myShop: null,
   },
   mutations: {
     handleAuthToken (state, token) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     handleProfile (state, profile) {
       state.profile = profile
+    },
+    handleMyShop (state, myShop) {
+      state.myShop = myShop
     }
   },
   actions: {

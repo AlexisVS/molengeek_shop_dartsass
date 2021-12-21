@@ -107,13 +107,9 @@ e.preventDefault();
       dataForm.append('picture', this.picture);
       axios.post('https://api-moshop.molengeek.pro/api/v1/register', dataForm)
         .then(res => {
-          console.log(res);
           if (res.status == 200) {
             this.$emit('registered', false)
           }
-        })
-        .catch(err => {
-          console.log(err);
         })
     },
     handleInputFile (e) {
