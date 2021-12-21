@@ -20,6 +20,10 @@ const routes = [
     path: '/personnal-shop',
     component: () => import(/* webpackChunkName: "PersonnalShop" */ '../views/PersonnalShop.vue')
   },
+  {
+    path: '/shopping-cart',
+    component: () => import(/* webpackChunkName: "ShoppingCart" */ '../views/ShoppingCart.vue')
+  },
 ]
 
 const router = new VueRouter({

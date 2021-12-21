@@ -26,20 +26,21 @@
       >Register</button>
     </div>
     <div class="flex items-center space-x-6" v-if="authToken != null">
-      <Profile/>
+      <Profile />
+      <ShoppindCart v-if="$store.state.shoppingCart.length > 0" />
     </div>
-      <Login
-        v-show="displayedModalLogin"
-        @toggleLoginOverlay="displayedModalLogin = !displayedModalLogin"
-        @signIn="displayedModalLogin = !displayedModalLogin; displayedModalRegister = !displayedModalRegister"
-        @logged="displayedModalLogin = !displayedModalLogin"
-      />
-      <Register
-        v-show="displayedModalRegister"
-        @toggleRegisterOverlay="displayedModalRegister = !displayedModalRegister"
-        @registerPopup="displayedModalLogin = !displayedModalLogin; displayedModalRegister = !displayedModalRegister"
-        @registered="displayedModalRegister = !displayedModalRegister"
-      />
+    <Login
+      v-show="displayedModalLogin"
+      @toggleLoginOverlay="displayedModalLogin = !displayedModalLogin"
+      @signIn="displayedModalLogin = !displayedModalLogin; displayedModalRegister = !displayedModalRegister"
+      @logged="displayedModalLogin = !displayedModalLogin"
+    />
+    <Register
+      v-show="displayedModalRegister"
+      @toggleRegisterOverlay="displayedModalRegister = !displayedModalRegister"
+      @registerPopup="displayedModalLogin = !displayedModalLogin; displayedModalRegister = !displayedModalRegister"
+      @registered="displayedModalRegister = !displayedModalRegister"
+    />
   </nav>
 </template>
 
@@ -48,12 +49,14 @@ import Login from './menu/Login.vue';
 import Register from './menu/Register.vue';
 import { mapState } from 'vuex'
 import Profile from './menu/Profile.vue';
+import ShoppindCart from './menu/ShoppindCart.vue';
 export default {
   components: {
     Login,
     Register,
-    Profile
-},
+    Profile,
+    ShoppindCart
+  },
   data () {
     return {
       displayedModalLogin: false,
@@ -63,6 +66,7 @@ export default {
   computed: {
     ...mapState([
       'authToken',
+      'shoppingCart'
     ])
   }
 }

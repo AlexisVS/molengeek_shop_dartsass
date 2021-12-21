@@ -35,7 +35,11 @@
             €
             <span class="text-4xl uppercase ml-2">{{ item.price }}</span>
           </p>
-          <div class="text-xs flex space-x-4 text-white items-center justify-center mt-7">
+          <button
+            class="w-full text-white py-2 text-center my-4 rounded-lg bg-blue-500 hover:bg-blue-600 font-bold uppercase"
+            @click="addToCart(item.id)"
+          >Add to card</button>
+          <div class="text-xs flex space-x-4 text-white items-center justify-center mt-2">
             <button
               class="bg-green-600 rounded-sm py-2 px-5 hover:bg-green-700 uppercase"
               @click="displayedModalEdit(item.id)"
@@ -71,7 +75,8 @@ export default {
   },
   computed: {
     ...mapState([
-      "myShop"
+      "myShop",
+      'shoppingCart',
     ]),
   },
   methods: {
@@ -85,6 +90,11 @@ export default {
           Authorization: "Bearer " + this.$store.state.authToken
         }
       })
+    },
+    addToCart (itemId) {
+      let item 
+      item = this.myShop.products.find(e => e.id == itemId )
+      this.$store.commit('handleShoppingCart', { ...item, quantity: 1 });
     }
   },
   mounted () {
