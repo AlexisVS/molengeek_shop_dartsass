@@ -89,10 +89,10 @@ import axios from "axios"
 export default {
   data () {
     return {
-      email: 'alexis.vansan1440@gmail.com',
-      password: 'Azerty123',
-      firstName: 'Alexis',
-      lastName: 'Van San',
+      email: null,
+      password: null,
+      firstName: null,
+      lastName: null,
       picture: null,
     }
   },
@@ -108,6 +108,9 @@ e.preventDefault();
       axios.post('https://api-moshop.molengeek.pro/api/v1/register', dataForm)
         .then(res => {
           console.log(res);
+          if (res.status == 200) {
+            this.$emit('registered', false)
+          }
         })
         .catch(err => {
           console.log(err);

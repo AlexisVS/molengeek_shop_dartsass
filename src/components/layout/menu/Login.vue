@@ -71,7 +71,14 @@ export default {
       formData.append('password', this.password);
       axios
         .post('https://api-moshop.molengeek.pro/api/v1/login', formData)
-        .then(res => { console.log(res); })
+        .then(res => {
+          console.log(res);
+          this.$store.commit('handleAuthToken', res.data.data.token);
+          localStorage.setItem('authToken', JSON.stringify({ token: res.data.data.token, timestamp: Date.now() }));
+          if (res.status == 200) {
+            this.$emit('logged', false);
+          }
+        })
         .catch(err => { console.log(err); })
     }
   }
