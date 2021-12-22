@@ -27,7 +27,10 @@
     </div>
     <div class="flex items-center space-x-6" v-if="authToken != null">
       <Profile />
-      <ShoppindCart v-if="$store.state.shoppingCart.length > 0" />
+      <ShoppindCart />
+            <router-link to="/ordered"
+        class="bg-white text-blue-500 hover:text-blue-400 shadow-sm py-1 px-6 font-bold rounded-md uppercase hover:bg-gray-200"
+      >Ordered</router-link>
     </div>
     <Login
       v-show="displayedModalLogin"
@@ -66,7 +69,6 @@ export default {
   computed: {
     ...mapState([
       'authToken',
-      'shoppingCart'
     ])
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="px-16">
     <div class="w-full flex items-center mt-12 justify-between">
-      <h1 v-if="myShop != null" class="text-gray-300 text-5xl font-semibold">{{ myShop.name }}</h1>
+      <!-- <h1 v-if="myShop != null" class="text-gray-300 text-5xl font-semibold">{{ myShop.name }}</h1> -->
       <button
         class="bg-blue-500 text-white shadow-sm py-1 px-6 font-bold rounded-md uppercase hover:bg-blue-600"
         @click="displayModalCreate = !displayModalCreate"
@@ -16,7 +16,7 @@
       <!-- Item -->
       <div
         class="flex flex-col items-stretch justify-center transform hover:-translate-y-5 transition-transform duration-1000"
-        v-for="item in myShop.products"
+        v-for="item in myShop"
         :key="item.id"
       >
         <img
@@ -71,12 +71,13 @@ export default {
       displayModalCreate: false,
       displayModalEdit: false,
       modalId: null,
+      myShop: null,
     };
   },
   computed: {
     ...mapState([
-      "myShop",
-      'shoppingCart',
+      // "myShop",
+      // 'shoppingCart',
     ]),
   },
   methods: {
@@ -92,9 +93,17 @@ export default {
       })
     },
     addToCart (itemId) {
-      let item 
-      item = this.myShop.products.find(e => e.id == itemId )
-      this.$store.commit('handleShoppingCart', { ...item, quantity: 1 });
+      // let item 
+      // item = this.myShop.products.find(e => e.id == itemId )
+      // this.$store.commit('handleShoppingCart', { ...item, quantity: 1 });
+      let dataForm = new FormData();
+      dataForm.append('product', itemId);
+      dataForm.append('quantity', 1);
+      axios.post("https://api-moshop.molengeek.pro/api/v1/cart", dataForm, {
+        headers: {
+          Authorization: "Bearer " + this.$store.state.authToken
+        }
+      }).then(res => console.log(res));
     }
   },
   mounted () {
@@ -103,8 +112,11 @@ export default {
         Authorization: "Bearer " + this.$store.state.authToken
       }
     }).then(res => {
-      this.$store.commit('handleMyShop', res.data.data);
+      console.log(res.data.data.products);
+      this.myShop = res.data.data.products
+      // this.$store.commit('handleMyShop', res.data.data);
     });
+
   },
   components: { Create, Edit }
 }
