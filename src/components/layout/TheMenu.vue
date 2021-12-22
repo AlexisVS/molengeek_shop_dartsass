@@ -15,6 +15,11 @@
         class="text-gray-300 transition duration-500 uppercase font-bold cursor-pointer hover:text-white"
       >Personnal shop</span>
     </router-link>
+    <router-link to="/all-shops">
+      <span
+        class="text-gray-300 transition duration-500 uppercase font-bold cursor-pointer hover:text-white"
+      >All shops</span>
+    </router-link>
     <div class="flex items-center space-x-6" v-if="authToken == null">
       <button
         class="bg-blue-500 text-white shadow-sm py-1 px-6 font-bold rounded-md uppercase hover:bg-blue-600"

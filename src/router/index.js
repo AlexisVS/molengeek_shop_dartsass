@@ -28,6 +28,14 @@ const routes = [
     path: '/ordered',
     component: () => import(/* webpackChunkName: "Ordered" */ '../views/Ordered.vue')
   },
+  {
+    path: '/all-shops',
+    component: () => import(/* webpackChunkName: "AllShops" */ '../views/AllShops.vue')
+  },
+  {
+    path: '/shop/:id',
+    component: () => import(/* webpackChunkName: "UserShop" */ '../views/UserShop.vue')
+  },
 ]
 
 const router = new VueRouter({
