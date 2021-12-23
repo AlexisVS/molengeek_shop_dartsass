@@ -11,6 +11,7 @@
       v-show="displayModalCreate"
       @closeCreateMyShop="displayModalCreate = !displayModalCreate"
       @showCreateItemModal="displayModalCreate = !displayModalCreate"
+      @addedItem="addItemToMyShop"
     />
     <div class="grid grid-cols-4 gap-9 mt-14 px-14" v-if="myShop != null">
       <!-- Item -->
@@ -20,6 +21,13 @@
         :key="item.id"
       >
         <img
+          v-if="item.picture != null"
+          :src="item.picture"
+          alt
+          class="w-full rounded-t-lg h-36 object-cover"
+        />
+        <img
+          v-else
           :src="'https://api-moshop.molengeek.pro' + item.cover_path"
           alt
           class="w-full rounded-t-lg h-36 object-cover"
@@ -56,6 +64,7 @@
       v-show="displayModalEdit"
       @closeEditModal="displayModalEdit = !displayModalEdit"
       :itemId="modalId"
+      @editItem="editedItemToMyShop"
     />
   </div>
 </template>
@@ -91,6 +100,7 @@ export default {
           Authorization: "Bearer " + this.$store.state.authToken
         }
       })
+      this.myShop = [...this.myShop].filter(e => e.id != itemId)
     },
     addToCart (itemId) {
       // let item 
@@ -104,6 +114,17 @@ export default {
           Authorization: "Bearer " + this.$store.state.authToken
         }
       }).then(res => console.log(res));
+    },
+    addItemToMyShop (object) {
+      this.myShop = [...this.myShop, {...object, id: this.myShop.pop().id + 1}];
+    },
+    editedItemToMyShop (object) {
+      this.myShop = [...this.myShop].map(e => {
+        if (e.id == object.id) {
+          return {...e, ...object}
+        }
+        return e
+      })
     }
   },
   mounted () {

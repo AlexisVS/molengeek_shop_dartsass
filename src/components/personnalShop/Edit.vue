@@ -63,6 +63,12 @@ export default {
       }).then(res => {
         if (res.status == 200) {
           this.$emit('closeEditModal', false);
+          this.$emit('editItem', {
+            id: this.itemId,
+            name: this.name,
+            description: this.description,
+            price: this.price,
+          })
         }
       })
     },

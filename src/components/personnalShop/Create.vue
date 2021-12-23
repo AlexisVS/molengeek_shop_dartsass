@@ -40,6 +40,7 @@ export default {
       dataForm.append("description", this.description);
       dataForm.append("price", this.price);
       dataForm.append("cover", this.cover);
+      console.log(dataForm);
       axios.post('https://api-moshop.molengeek.pro/api/v1/product', dataForm, {
         headers: {
           Authorization: "Bearer " + this.$store.state.authToken
@@ -48,6 +49,12 @@ export default {
         if (res.status == 200) {
           this.$emit('closeCreateMyShop', false);
         }
+      })
+      this.$emit('addedItem', {
+        name: this.name,
+        description: this.description,
+        price: this.price,
+        picture: URL.createObjectURL(this.cover)
       })
     },
   }

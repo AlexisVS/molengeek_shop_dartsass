@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <p v-if="payd != null" class="text-6x text-white font-semibold">Vous avez payer {{ payd.price }}€</p>
+    <p v-if="payd != null" class="text-6x text-center text-white font-semibold">Vous avez payer {{ payd.price }}€</p>
   </div>
 </template>
 
@@ -61,6 +61,7 @@ export default {
           Authorization: "Bearer " + this.$store.state.authToken
         }
       }).then(res => this.payd = res.data.data)
+      this.shoppingCart = null;
     },
   },
   mounted () {
