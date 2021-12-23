@@ -65,6 +65,7 @@
       @closeEditModal="displayModalEdit = !displayModalEdit"
       :itemId="modalId"
       @editItem="editedItemToMyShop"
+      @editItemImage="editedItemImageToMyShop"
     />
   </div>
 </template>
@@ -122,6 +123,14 @@ export default {
       this.myShop = [...this.myShop].map(e => {
         if (e.id == object.id) {
           return {...e, ...object}
+        }
+        return e
+      })
+    },
+    editedItemImageToMyShop(object) {
+            this.myShop = [...this.myShop].map(e => {
+        if (e.id == object.id) {
+          return {...e, ...object, picture: object.cover_path}
         }
         return e
       })

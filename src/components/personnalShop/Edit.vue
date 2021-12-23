@@ -26,6 +26,8 @@
           v-model="price"
           pattern="[0-9]"
         />
+        <input type="file" 
+        @change="handleInputFile"/>
         <input
           type="submit"
           value="Save"
@@ -48,29 +50,53 @@ export default {
       name: null,
       description: null,
       price: null,
+      picture: null,
     }
   },
   methods: {
+    handleInputFile (e) {
+      this.picture = e.target.files[0]
+    },
     submit () {
-      let dataForm = new FormData();
-      dataForm.append("name", this.name);
-      dataForm.append("description", this.description);
-      dataForm.append("price", parseInt(this.price));
-      axios.put('https://api-moshop.molengeek.pro/api/v1/product/' + this.itemId, dataForm, {
-        headers: {
-          Authorization: "Bearer " + this.$store.state.authToken
-        }
-      }).then(res => {
-        if (res.status == 200) {
-          this.$emit('closeEditModal', false);
-          this.$emit('editItem', {
-            id: this.itemId,
-            name: this.name,
-            description: this.description,
-            price: this.price,
-          })
-        }
-      })
+      if (this.name != null && this.description != null && this.price != null) {
+
+        let dataForm = new FormData();
+        dataForm.append("name", this.name);
+        dataForm.append("description", this.description);
+        dataForm.append("price", parseInt(this.price));
+        axios.put('https://api-moshop.molengeek.pro/api/v1/product/' + this.itemId, dataForm, {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.authToken
+          }
+        }).then(res => {
+          if (res.status == 200) {
+            this.$emit('closeEditModal', false);
+            this.$emit('editItem', {
+              id: this.itemId,
+              name: this.name,
+              description: this.description,
+              price: this.price,
+            })
+          }
+        })
+      }
+      if (this.picture != null) {
+        let dataFormImage = new FormData();
+        dataFormImage.append('cover', this.picture);
+        axios.put('https://api-moshop.molengeek.pro/api/v1/product/' + this.itemId + '/picture', dataFormImage, {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.authToken
+          }
+        }).then(res => {
+          if (res.status == 200) {
+            this.$emit('closeEditModal', false);
+            this.$emit('editItemImage', {
+              id: this.itemId,
+              cover_path: URL.createObjectURL(this.picture)
+            })
+          }
+        })
+      }
     },
   }
 }
